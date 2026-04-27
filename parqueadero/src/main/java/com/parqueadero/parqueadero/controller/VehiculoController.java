@@ -1,33 +1,59 @@
 package com.parqueadero.parqueadero.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.parqueadero.parqueadero.model.Vehiculo;
 import com.parqueadero.parqueadero.repository.VehiculoRepository;
 
+import java.time.LocalDateTime;
+import java.util.List;
+
 @RestController
 @RequestMapping("/vehiculos")
-@CrossOrigin
 public class VehiculoController {
 
     @Autowired
     private VehiculoRepository repo;
 
+   
     @GetMapping
     public List<Vehiculo> listar() {
         return repo.findAll();
     }
 
-    @PostMapping
-    public Vehiculo crear(@RequestBody Vehiculo v) {
+   
+    @PostMapping("/entrada")
+    public Vehiculo entrada(@RequestBody Vehiculo v) {
+
+        if (v.getPlaca().length() > 6) {
+            throw new RuntimeException("La placa no puede tener más de 6 caracteres");
+        }
+
+        v.setHoraEntrada(LocalDateTime.now());
+        return repo.save(v);
+    }
+
+   
+    @PutMapping("/salida/{id}")
+    public Vehiculo salida(@PathVariable Long id) {
+
+        Vehiculo v = repo.findById(id).orElseThrow();
+
+        if (v.getHoraEntrada() == null) {
+            throw new RuntimeException("El vehículo no tiene entrada registrada");
+        }
+
+        v.setHoraSalida(LocalDateTime.now());
+        return repo.save(v);
+    }
+
+   
+    @PutMapping("/ubicacion/{id}")
+    public Vehiculo actualizarUbicacion(@PathVariable Long id, @RequestParam String ubicacion) {
+
+        Vehiculo v = repo.findById(id).orElseThrow();
+        v.setUbicacion(ubicacion);
         return repo.save(v);
     }
 }
