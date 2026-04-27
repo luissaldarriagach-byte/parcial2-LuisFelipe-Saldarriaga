@@ -38,7 +38,8 @@ public class VehiculoController {
     @PutMapping("/salida/{id}")
     public Vehiculo salida(@PathVariable Long id) {
 
-        Vehiculo v = repo.findById(id).orElseThrow();
+    	Vehiculo v = repo.findById(id).orElseThrow();
+    	v.getTipoVehiculo().getNombre();
 
         if (v.getHoraEntrada() == null) {
             throw new RuntimeException("El vehículo no tiene entrada registrada");
