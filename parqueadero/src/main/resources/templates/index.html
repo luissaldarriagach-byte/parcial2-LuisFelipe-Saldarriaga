@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Parqueadero</title>
+    <style>
+        body { font-family: Arial; margin: 40px; }
+        input, button { padding: 8px; margin: 5px; }
+        table { border-collapse: collapse; margin-top: 20px; }
+        td, th { border: 1px solid black; padding: 8px; }
+    </style>
+</head>
+<body>
+
+<h2>Registrar Vehículo</h2>
+
+<input id="placa" placeholder="Placa">
+<input id="ubicacion" placeholder="Ubicación">
+<input id="tipo" placeholder="ID Tipo (1,2...)">
+
+<button onclick="guardar()">Guardar</button>
+
+<h2>Lista de Vehículos</h2>
+
+<button onclick="cargar()">Cargar</button>
+
+<table id="tabla">
+    <tr>
+        <th>ID</th>
+        <th>Placa</th>
+        <th>Ubicación</th>
+    </tr>
+</table>
+
+<script>
+function guardar() {
+    fetch("http://localhost:8080/vehiculos/entrada", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+            placa: document.getElementById("placa").value,
+            ubicacion: document.getElementById("ubicacion").value,
+            tipoVehiculo: {
+                id: document.getElementById("tipo").value
+            }
+        })
+    }).then(() => alert("Guardado"));
+}
+
+function cargar() {
+    fetch("http://localhost:8080/vehiculos")
+    .then(res => res.json())
+    .then(data => {
+        let tabla = document.getElementById("tabla");
+        tabla.innerHTML = `
+            <tr>
+                <th>ID</th>
+                <th>Placa</th>
+                <th>Ubicación</th>
+            </tr>
+        `;
+        data.forEach(v => {
+            tabla.innerHTML += `
+                <tr>
+                    <td>${v.id}</td>
+                    <td>${v.placa}</td>
+                    <td>${v.ubicacion}</td>
+                </tr>
+            `;
+        });
+    });
+}
+</script>
+
+</body>
+</html>
