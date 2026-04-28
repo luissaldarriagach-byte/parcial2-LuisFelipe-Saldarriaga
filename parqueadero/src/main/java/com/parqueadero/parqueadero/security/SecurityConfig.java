@@ -22,7 +22,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .defaultSuccessUrl("/", true)
+            		.defaultSuccessUrl("/", true)
             );
 
         return http.build();
