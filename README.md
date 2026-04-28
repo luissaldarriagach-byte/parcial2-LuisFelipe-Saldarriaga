@@ -1,25 +1,31 @@
 # Sistema de Parqueadero
 
 ## Descripción
-Aplicación web desarrollada con Spring Boot para la gestión de entradas y salidas de vehículos en un parqueadero.
-
-## Funcionalidades
-- Registro de entrada de vehículos
-- Registro de salida
-- Actualización de ubicación
-- Gestión de tipos de vehículo
-
-## Roles
-- Administrador: acceso completo
-- Cliente: solo visualización
-- Acomodador: actualización de ubicación
+Aplicación web para gestionar entradas y salidas de vehículos.
 
 ## Tecnologías
 - Spring Boot
 - PostgreSQL
 - Swagger
+- Spring Security
 
-## Pruebas
-Los endpoints pueden probarse en Swagger ejecutando la aplicación localmente:
+## Ejecución
+1. Ejecutar el proyecto
+2. Ir a: http://localhost:8080
 
+## Usuarios
+
+ADMIN
+usuario: admin
+contraseña: 123
+
+CLIENTE
+usuario: cliente
+contraseña: 123
+
+ACOMODADOR
+usuario: acomodador
+contraseña: 123
+
+## Swagger
 http://localhost:8080/swagger-ui.html
