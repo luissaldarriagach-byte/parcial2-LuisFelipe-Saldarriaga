@@ -29,3 +29,7 @@ contraseña: 123
 
 ## Swagger
 http://localhost:8080/swagger-ui.html
+
+## Base de datos
+
+toda la informacion esta dentro de el archivo
